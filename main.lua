@@ -1,5 +1,5 @@
 
-local floorImage = love.graphics.newImage("Floor.png")		 -- Pure grass tile	
+local floorImage = love.graphics.newImage("Floor.png")		 -- Pure grass tile
 local autotileImage = love.graphics.newImage("Autotile.png") -- Autotile image
 local width = autotileImage:getWidth()		-- Image width
 local height = autotileImage:getHeight()	-- Image height
@@ -46,11 +46,11 @@ function drawAutotile(x,y)
 	if grid[x+1] and grid[x+1][y-1] and val.TR == 3 then val.TR = 4 end	-- topright
 	if grid[x-1] and grid[x-1][y+1] and val.BL == 3 then val.BL = 4 end	-- bottomleft
 	if grid[x+1] and grid[x+1][y+1] and val.BR == 3 then val.BR = 4 end	-- bottomright
-	
+
 	-- If isolated then draw the island.
 	if val.TL == 0 and val.TR == 0 and val.BL == 0 and val.BR == 0 then
 		love.graphics.draw(autotileImage, chunk.island, x*size,y*size)
-	
+
 	-- Otherwise, draw the chunks
 	else
 		love.graphics.draw(autotileImage, chunk.TL[val.TL], x*size,y*size)
@@ -58,10 +58,10 @@ function drawAutotile(x,y)
 		love.graphics.draw(autotileImage, chunk.BL[val.BL], x*size,y*size+hsize)
 		love.graphics.draw(autotileImage, chunk.BR[val.BR], x*size+hsize,y*size+hsize)
 	end
-	
+
 end
- 
- 
+
+
 function love.update()
 
 	-- If a tile is leftclicked then make it an autotile
@@ -70,17 +70,17 @@ function love.update()
 		if not grid[x] then grid[x] = {} end
 		grid[x][y] = true
 	end
-	
+
 	-- If a tile is rightclicked then erase the autotile
 	if love.mouse.isDown(2) then
 		local x,y = math.floor(love.mouse.getX()/size), math.floor(love.mouse.getY()/size)
 		if grid[x] then grid[x][y] = nil end
 	end
-	
+
 end
 
  function love.draw()
- 
+
 	-- Draw the autotiles
 	local endx = math.ceil(love.graphics.getWidth() /size)
 	for x = 0, math.ceil(love.graphics.getWidth() /size) do
@@ -92,14 +92,14 @@ end
 			end
 		end
 	end
-    
+
     --Draw the cursor
     local mx, my = love.mouse.getPosition()
     love.graphics.setColor(0,0,0,255)
     love.graphics.rectangle("line", mx+1 - mx % size, my+1 - my % size, size, size)
     love.graphics.setColor(255,255,255,255)
     love.graphics.rectangle("line", mx - mx % size, my - my % size, size, size)
-	
+
 	-- Instructions
 	love.graphics.setColor(0,0,0,100)
 	love.graphics.rectangle('fill',0,0,350,20)
