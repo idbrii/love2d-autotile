@@ -65,14 +65,14 @@ end
 function love.update()
 
 	-- If a tile is leftclicked then make it an autotile
-	if love.mouse.isDown('l') then
+	if love.mouse.isDown(1) then
 		local x,y = math.floor(love.mouse.getX()/size), math.floor(love.mouse.getY()/size)
 		if not grid[x] then grid[x] = {} end
 		grid[x][y] = true
 	end
 	
 	-- If a tile is rightclicked then erase the autotile
-	if love.mouse.isDown('r') then
+	if love.mouse.isDown(2) then
 		local x,y = math.floor(love.mouse.getX()/size), math.floor(love.mouse.getY()/size)
 		if grid[x] then grid[x][y] = nil end
 	end
