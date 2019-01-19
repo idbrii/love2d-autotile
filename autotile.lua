@@ -16,34 +16,34 @@ local function drawAutotile(chunk, grid, x, y)
 	if grid[x-1] and grid[x-1][y+1] and val.BL == 3 then val.BL = 4 end	-- bottomleft
 	if grid[x+1] and grid[x+1][y+1] and val.BR == 3 then val.BR = 4 end	-- bottomright
 
-	local size = chunk.size
+	local size = chunk.tile_size
 	local hsize = math.floor(size/2)			-- Half tile size
-	local autotileImage = chunk.autotileImage
+	local tile_img = chunk.tile_img
 
 	-- If isolated then draw the island.
 	if val.TL == 0 and val.TR == 0 and val.BL == 0 and val.BR == 0 then
-		love.graphics.draw(autotileImage, chunk.island, x*size,y*size)
+		love.graphics.draw(tile_img, chunk.island, x*size,y*size)
 
 		-- Otherwise, draw the chunks
 	else
-		love.graphics.draw(autotileImage, chunk.TL[val.TL], x*size,y*size)
-		love.graphics.draw(autotileImage, chunk.TR[val.TR], x*size+hsize,y*size)
-		love.graphics.draw(autotileImage, chunk.BL[val.BL], x*size,y*size+hsize)
-		love.graphics.draw(autotileImage, chunk.BR[val.BR], x*size+hsize,y*size+hsize)
+		love.graphics.draw(tile_img, chunk.TL[val.TL], x*size,y*size)
+		love.graphics.draw(tile_img, chunk.TR[val.TR], x*size+hsize,y*size)
+		love.graphics.draw(tile_img, chunk.BL[val.BL], x*size,y*size+hsize)
+		love.graphics.draw(tile_img, chunk.BR[val.BR], x*size+hsize,y*size+hsize)
 	end
 
 end
 
-local function create(autotileImage, size)
-	local width = autotileImage:getWidth()		-- Image width
-	local height = autotileImage:getHeight()	-- Image height
-	local hsize = math.floor(size/2)			-- Half tile size
+local function create(tile_img, tile_size)
+	local width = tile_img:getWidth()		-- Image width
+	local height = tile_img:getHeight()	-- Image height
+	local hsize = math.floor(tile_size/2)			-- Half tile size
 
 	-- Chunk arrays
 	local chunk = {TL={}, TR={}, BL={}, BR={}}
 
 	-- Island tile
-	chunk.island = love.graphics.newQuad(0, 0, size, size, width, height)
+	chunk.island = love.graphics.newQuad(0, 0, tile_size, tile_size, width, height)
 
 	-- This cuts a tile into chunks
 	local function cutTile(x,y)
@@ -55,14 +55,14 @@ local function create(autotileImage, size)
 	end
 
 	-- Cut out the chunks and index them by their adjacent tile value
-	chunk.TL[3], chunk.TR[3], chunk.BL[3], chunk.BR[3] = cutTile(size,0)
-	chunk.TL[0], chunk.TR[2], chunk.BL[1], chunk.BR[4] = cutTile(0,size)
-	chunk.TL[1], chunk.TR[0], chunk.BL[4], chunk.BR[2] = cutTile(size, size)
-	chunk.TL[2], chunk.TR[4], chunk.BL[0], chunk.BR[1] = cutTile(0, size*2)
-	chunk.TL[4], chunk.TR[1], chunk.BL[2], chunk.BR[0] = cutTile(size, size*2)
+	chunk.TL[3], chunk.TR[3], chunk.BL[3], chunk.BR[3] = cutTile(tile_size,0)
+	chunk.TL[0], chunk.TR[2], chunk.BL[1], chunk.BR[4] = cutTile(0,tile_size)
+	chunk.TL[1], chunk.TR[0], chunk.BL[4], chunk.BR[2] = cutTile(tile_size, tile_size)
+	chunk.TL[2], chunk.TR[4], chunk.BL[0], chunk.BR[1] = cutTile(0, tile_size*2)
+	chunk.TL[4], chunk.TR[1], chunk.BL[2], chunk.BR[0] = cutTile(tile_size, tile_size*2)
 
-	chunk.autotileImage = autotileImage
-	chunk.size = size
+	chunk.tile_img = tile_img
+	chunk.tile_size = tile_size
 	chunk.drawAutotile = drawAutotile
 	return chunk
 end

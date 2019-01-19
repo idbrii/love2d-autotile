@@ -1,9 +1,9 @@
 local autotile = require('autotile')
 
-local floorImage = love.graphics.newImage("Floor.png")		 -- Pure grass tile
-local autotileImage = love.graphics.newImage("Autotile.png") -- Autotile image
+local floor_image = love.graphics.newImage("Floor.png")		 -- Pure grass tile
+local autotile_image = love.graphics.newImage("Autotile.png") -- Autotile image
 local size = 32								-- Tile size
-local tiler = autotile(autotileImage, size)
+local tiler = autotile(autotile_image, size)
 
 
 -- A 2-d grid used to represent connected tiles. Values can either contain true for
@@ -36,7 +36,7 @@ end
 			if grid[x] and grid[x][y] then
 				tiler:drawAutotile(grid,x,y)
 			else
-				love.graphics.draw(floorImage, x*size, y*size)
+				love.graphics.draw(floor_image, x*size, y*size)
 			end
 		end
 	end
@@ -52,6 +52,6 @@ end
 	love.graphics.setColor(0,0,0,100)
 	love.graphics.rectangle('fill',0,0,350,20)
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("Left click to place tiles. Right click to delete them",5,5)
+	love.graphics.print("Left click to place tiles. Right click to delete them.",5,5)
 
  end
