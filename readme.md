@@ -36,6 +36,8 @@ To use autotile, you need three things:
 
 See [this post by Kadoba](https://love2d.org/forums/viewtopic.php?t=7826) for more information.
 
+See main.lua for a complete example.
+
 Credits
 =======
 Autotile is based on code [written by Kadoba from the love
